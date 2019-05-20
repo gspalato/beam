@@ -39,7 +39,7 @@ No method of versioning currently enforced.
 ## 👨‍🏫 Authors
 
 - **Gabriel Spalato Marques** (o_Hinoki, ohinoki)
-- **Jimmy Veng** (Apacheli)
+- **Jimmy Vang** (Apacheli)
 
 ## 📝 License
 
@@ -47,4 +47,4 @@ This project is under the [MIT License]().
 
 ## 👥 Acknowledgements
 
-- **Jimmy Veng** (Apacheli)
+- **Jimmy Vang** (Apacheli)
