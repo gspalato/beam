@@ -24,7 +24,7 @@ $ npm i --save
 ```
 
 ## 📖 Examples
-- [Example Bot](https://github.com/gspalato/magma/blob/master/examples/bot/index.ts)
+- [Example Bot](https://github.com/gspalato/magma/blob/master/examples/bot/index.js)
 
 ## 🛠️ Built with
 
