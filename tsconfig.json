@@ -6,7 +6,6 @@
             "es6",
             "esnext.array",
         ],
-        /* 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017','ES2018' or 'ESNEXT'. */
         "esModuleInterop": true,
         "allowSyntheticDefaultImports": true,
         "experimentalDecorators": true,
@@ -14,6 +13,7 @@
         "outDir": "./dist"
     },
     "exclude": [
-        "test.ts"
+        "test.ts",
+        "examples"
     ]
 }
