@@ -10,6 +10,7 @@ export default class Queue extends EventEmitter {
     public connection: Discord.VoiceConnection;
     public current: Track;
     public playing: boolean = false;
+    public volume: number = .5;
     public queue: Track[] = [];
 
     constructor(public guild: Discord.Guild) {
@@ -51,9 +52,11 @@ export default class Queue extends EventEmitter {
         this.current.setStart();
         this.playing = true;
 
+        dispatcher.setVolumeLogarithmic(.5);
+
         dispatcher.on('end', (reason: string): void => {
             this.playing = false;
-            console.log("DEBUG: SONG ENDED, STOPPED PLAYING");
+            console.log(`DEBUG: SONG ENDED, STOPPED PLAYING. REASON: ${reason}`);
             
             this.emit("songEnded", channel, this.queue[0]);
 
@@ -61,10 +64,14 @@ export default class Queue extends EventEmitter {
                 console.log("DEBUG: Attempting to replay");
                 this.play(channel);
             } else {
+                if (this.dispatcher.stream)
+                    this.dispatcher.stream.destroy()
+
                 this.playing = false;
                 this.dispatcher = null;
             }
         });
+
         dispatcher.on('error', console.error)
     }
 
