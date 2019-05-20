@@ -17,6 +17,14 @@ export default class Queue extends EventEmitter {
         super()
     }
 
+
+    /**
+     * Joins a voice channel.
+     *     Queue.join(msg.member.voiceChannel);
+     * 
+     * @param {Discord.VoiceChannel} channel The voice channel.
+     * @returns {Promise<Discord.VoiceConnection>}
+     */
     public async join(channel: Discord.VoiceChannel): Promise<Discord.VoiceConnection> {
         if (channel && channel.connection) {
             return channel.connection;
@@ -26,10 +34,27 @@ export default class Queue extends EventEmitter {
         return this.connection;
     }
 
+
+    /**
+     * Push a new track to the queue.
+     *     Queue.push(Client.resolve("https://www.youtube.com/watch?v=dQw4w9WgXcQ"));
+     * 
+     * @param {Track} track
+     * @returns {void}
+     */
     public push(track: Track): void {
         this.queue.push(track);
     }
 
+
+    /**
+     * Plays music on the designated music channel.
+     *     Queue.play(msg.member.voiceChannel);
+     * 
+     * @param {Discord.VoiceChannel} channel The voice channel.
+     * @return {Promise<void>}
+     * 
+     */
     public async play(channel: Discord.VoiceChannel): Promise<void> {
         if (this.playing) {
             console.log("DEBUG: ALREADY PLAYING");
@@ -75,10 +100,24 @@ export default class Queue extends EventEmitter {
         dispatcher.on('error', console.error)
     }
 
+
+    /**
+     * Skips to the next song.
+     *     Queue.skip();
+     * 
+     * @returns {void}
+     */
     public skip() {
         this.dispatcher.end(":skip:");
     }
 
+
+    /**
+     * Shifts and returns the next song in the queue
+     *     Queue.next();
+     * 
+     * @returns {Track | null}
+     */
     private next(): Track {
         if (this.queue[0])
             return this.queue.shift();
