@@ -1,5 +1,5 @@
-<p align="center" style="font-size:5em;font-family:'Aller', 'Segoe UI', sans-serif">
-    Magma
+<p align="center">
+    <img src="https://i.ibb.co/kQpPkbz/magma.png"/>
 </p>
 <p align="center">
     <img src="https://img.shields.io/circleci/token/3e33cf4699dbc3e1256cf2ea2cf55ff2fd11c754/project/github/gspalato/magma/master.svg?style=for-the-badge&logo=circleci"/>
