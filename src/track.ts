@@ -14,15 +14,33 @@ export default class Track {
         this.thumbnail = video.thumbnails.default;
     }
 
+
+    /**
+     * Sets the timestamp of when the track started playing
+     * 
+     * @returns {void}
+     */
     public setStart(): void {
         this.startedAt = Date.now();
     }
 
+
+    /**
+     * Returns a stream of the music.
+     * 
+     * @returns {ReadableStream<any>} The stream used to play the music.
+     */
     public stream() {
         return ytdl(this.url);
     }
 
+
+    /**
+     * Returns the current position of the song in seconds.
+     * 
+     * @returns {number} The position of the song in seconds.
+     */
     public position(): number {
-        return (Date.now() - this.startedAt) / 1000;
+        return Math.floor((Date.now() - this.startedAt) / 1000);
     }
 }
