@@ -1,6 +1,6 @@
 {
   "name": "@ohinoki/magma",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "description": "A YTDL wrapper with queue system for discord.js.",
   "main": "dist/index.js",
   "scripts": {
