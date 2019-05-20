@@ -8,6 +8,10 @@
     "prepare": "tsc",
     "postinstall": "tsc"
   },
+  "repository": {
+      "type": "git",
+      "url": "https://github.com/gspalato/magma"
+  },
   "author": "Gabriel Spalato Marques",
   "license": "MIT",
   "dependencies": {
