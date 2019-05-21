@@ -7,6 +7,7 @@ export default class Track {
     public url: string;
     public title: string;
     public stream: Readable;
+    public length: number;
     public startedAt: number;
     public thumbnail: string;
 
@@ -14,6 +15,7 @@ export default class Track {
         this.url = video.url;
         this.title = video.title;
         this.stream = ytdl(this.url);
+        this.length = video.durationSeconds;
         this.startedAt = 0;
         this.thumbnail = video.thumbnails.default.url;
     }
