@@ -69,7 +69,9 @@ export default class Queue extends EventEmitter {
         }
 
         const connection: Discord.VoiceConnection = await this.join(channel);
-        const dispatcher: Discord.StreamDispatcher = connection.playStream(next.stream());
+        const dispatcher: Discord.StreamDispatcher = connection.playStream(next.stream);
+
+        this.emit("songStarted", channel, this.current);
 
         this.dispatcher = dispatcher;
         this.connection = connection;
