@@ -1,4 +1,3 @@
-import ytdl from "ytdl-core";
 import * as YouTube from "simple-youtube-api";
 
 import { Readable } from "stream";
@@ -14,7 +13,6 @@ export default class Track {
     constructor(video: YouTube.video) {
         this.url = video.url;
         this.title = video.title;
-        this.stream = ytdl(this.url);
         this.length = video.durationSeconds;
         this.startedAt = 0;
         this.thumbnail = video.thumbnails.default.url;

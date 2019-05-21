@@ -1,5 +1,5 @@
 import * as Discord from "discord.js";
-import ytdl from "ytdl-core";
+import ytdl from "ytdl-core-discord";
 import YouTube = require("simple-youtube-api");
 import { EventEmitter } from "events";
 
@@ -69,7 +69,7 @@ export default class Queue extends EventEmitter {
         }
 
         const connection: Discord.VoiceConnection = await this.join(channel);
-        const dispatcher: Discord.StreamDispatcher = connection.playStream(next.stream);
+        const dispatcher: Discord.StreamDispatcher = connection.playOpusStream(await ytdl(next.url));
 
         this.emit("songStarted", channel, this.current);
 
