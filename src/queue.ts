@@ -4,6 +4,7 @@ import YouTube = require("simple-youtube-api");
 import { EventEmitter } from "events";
 
 import Track from "./track";
+import { Client } from ".";
 
 export default class Queue extends EventEmitter {
     public dispatcher: Discord.StreamDispatcher;
@@ -26,9 +27,11 @@ export default class Queue extends EventEmitter {
      * @returns {Promise<Discord.VoiceConnection>}
      */
     public async join(channel: Discord.VoiceChannel): Promise<Discord.VoiceConnection> {
-        if (channel && channel.connection) {
+        if (this.guild.voiceConnection)
+            this.connection = this.guild.voiceConnection;
+        
+        if (channel && channel.connection)
             return channel.connection;
-        }
 
         this.connection = await channel.join();
         return this.connection;
