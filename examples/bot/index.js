@@ -1,5 +1,5 @@
-import * as Discord from "discord.js";
-import * as Magma from "@ohinoki/magma";
+const Discord = require("discord.js");
+const Magma = require("@ohinoki/magma");
 
 const client = new Discord.Client();
 const magma = new Magma.Client(client, "YouTube API Token");
