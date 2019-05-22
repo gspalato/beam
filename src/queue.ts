@@ -99,6 +99,8 @@ export default class Queue extends EventEmitter {
 
                 this.playing = false;
                 this.dispatcher = null;
+
+                this.dispatcher.end()
             }
         });
 
