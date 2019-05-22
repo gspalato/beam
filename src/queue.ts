@@ -21,7 +21,7 @@ export default class Queue extends EventEmitter {
     /**
      * Joins a voice channel.
      *     Queue.join(msg.member.voiceChannel);
-     * 
+     *
      * @param {Discord.VoiceChannel} channel The voice channel.
      * @returns {Promise<Discord.VoiceConnection>}
      */
@@ -38,7 +38,7 @@ export default class Queue extends EventEmitter {
     /**
      * Push a new track to the queue.
      *     Queue.push(Client.resolve("https://www.youtube.com/watch?v=dQw4w9WgXcQ"));
-     * 
+     *
      * @param {Track} track
      * @returns {void}
      */
@@ -50,10 +50,10 @@ export default class Queue extends EventEmitter {
     /**
      * Plays music on the designated music channel.
      *     Queue.play(msg.member.voiceChannel);
-     * 
+     *
      * @param {Discord.VoiceChannel} channel The voice channel.
      * @return {Promise<void>}
-     * 
+     *
      */
     public async play(channel: Discord.VoiceChannel): Promise<void> {
         if (this.playing) {
@@ -104,7 +104,7 @@ export default class Queue extends EventEmitter {
     /**
      * Skips to the next song.
      *     Queue.skip();
-     * 
+     *
      * @returns {void}
      */
     public skip() {
@@ -115,7 +115,7 @@ export default class Queue extends EventEmitter {
     /**
      * Shifts and returns the next song in the queue
      *     Queue.next();
-     * 
+     *
      * @returns {Track | null}
      */
     private next(): Track {

@@ -17,7 +17,7 @@ export default class Track {
 
     /**
      * Sets the timestamp of when the track started playing
-     * 
+     *
      * @returns {void}
      */
     public setStart(): void {
@@ -27,7 +27,7 @@ export default class Track {
 
     /**
      * Returns a stream of the music.
-     * 
+     *
      * @returns {ReadableStream<any>} The stream used to play the music.
      */
     public stream() {
@@ -37,7 +37,7 @@ export default class Track {
 
     /**
      * Returns the current position of the song in seconds.
-     * 
+     *
      * @returns {number} The position of the song in seconds.
      */
     public position(): number {
