@@ -1,5 +1,5 @@
-import * as Discord from "discord.js";
-import * as Magma from "@ohinoki/magma";
+const Discord = require("discord.js");
+const Magma = require("@ohinoki/magma");
 
 const client = new Discord.Client();
 const magma = new Magma.Client(client, "YouTube API Token");
@@ -16,7 +16,7 @@ client.on("message", async (msg) => {
     }
 
     let args = msg.content.substring(prefix.length).split(" ");
-    let cmd = args.shift()
+    let cmd = args.shift();
 
     if (cmd === "play") {
         if (!msg.member.voiceChannel) {
@@ -27,15 +27,15 @@ client.on("message", async (msg) => {
         let queue = magma.getQueue(msg.guild);
         let track = await magma.resolve(args[0]);
         queue.push(track);
-        msg.channel.send(`Added **${track.title}** to the queue!`)
+        msg.channel.send(`Added **${track.title}** to the queue!`);
 
         if (!queue.playing) {
             queue.play(msg.member.voiceChannel);
-            msg.channel.send(`Now playing **${track.title}**`)
+            msg.channel.send(`Now playing **${track.title}**`);
         }
     } else if (cmd === "skip") {
-        let queue = magma.getQueue(msg.guild)
-        queue.skip()
+        let queue = magma.getQueue(msg.guild);
+        queue.skip();
     }
 });
 
