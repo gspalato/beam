@@ -39,10 +39,13 @@ export default class Client {
                 return null;
             });
 
-        let result = tracks[0];
+        if (tracks) {
+            let result = tracks[0];
 
-        let track = new Track(result.track, result.info.title, result.info.length, 0);
-        return track;
+            let track = new Track(result.track, result.info.title, result.info.length, 0);
+            return track;
+        } else
+            throw new Error("Couldn't search.")
     }
 
 
