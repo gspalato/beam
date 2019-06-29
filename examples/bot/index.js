@@ -25,7 +25,7 @@ client.on("message", async (msg) => {
         }
 
         let queue = magma.getQueue(msg.guild);
-        let track = await magma.resolve(args[0]);
+        let track = await magma.resolve(args[0], cmd.guild.member(cmd.author));
         queue.push(track);
         msg.channel.send(`Added **${track.title}** to the queue!`)
 
