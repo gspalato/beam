@@ -1,21 +1,14 @@
-import * as YouTube from "simple-youtube-api";
-
 import { Readable } from "stream";
 
 export default class Track {
-    public url: string;
-    public title: string;
-    public stream: Readable;
-    public length: number;
-    public startedAt: number;
-    public thumbnail: string;
-
-    constructor(video: YouTube.video) {
-        this.url = video.url;
-        this.title = video.title;
-        this.length = video.durationSeconds;
-        this.startedAt = 0;
-        this.thumbnail = video.thumbnails.default.url;
+    constructor(
+        public id: string, 
+        public title: string, 
+        public length: number, 
+        public startedAt: number, 
+        public thumbnail?: string
+    ) {
+        this.length = length / 1000
     }
 
 

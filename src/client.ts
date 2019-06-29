@@ -1,18 +1,21 @@
+import * as Lavalink from "discord.js-lavalink";
 import * as Discord from "discord.js";
+import fetch from "node-fetch";
 import * as url from "url";
-const YouTube = require("simple-youtube-api");
-// import * as YouTube from "simple-youtube-api";
+
 
 import Queue from "./queue";
 import Track from "./track";
 
 export default class Client {
-    public youtube;
+    public lavalink = new Lavalink.PlayerManager(this.client, this.nodes, { user: this.client.user.id, shards: this.shards });
     public queues: Map<string, Queue> = new Map();
 
-    constructor(public client: Discord.Client, key: string) {
-        this.youtube = new YouTube(key);
-    }
+    constructor(
+        public client: Discord.Client, 
+        public nodes: { host: string, port: number, password: string }[],
+        public shards: number
+    ) {}
 
 
     /**
@@ -23,9 +26,22 @@ export default class Client {
      * @returns {Track}
      */
     public async resolve(input: string): Promise<Track> {
-        const video = await this.youtube.getVideo(input);
-        const track: Track = new Track(video);
+        const node = this.nodes[0];
 
+        const params = new url.URLSearchParams();
+        params.append("identifier", `ytsearch:${input}`);
+
+        let tracks = await fetch(`http://${node.host}:${node.port}/loadtracks?${params.toString()}`, { headers: { Authorization: node.password } })
+            .then(res => res.json())
+            .then(data => data.tracks)
+            .catch(err => {
+                console.error(err);
+                return null;
+            });
+
+        let result = tracks[0];
+
+        let track = new Track(result.track, result.info.title, result.info.length, 0);
         return track;
     }
 
@@ -42,7 +58,7 @@ export default class Client {
             return this.queues.get(guild.id);
         }
 
-        const queue: Queue = new Queue(guild);
+        const queue: Queue = new Queue(this, guild);
         this.queues.set(guild.id, queue);
 
         return queue;
