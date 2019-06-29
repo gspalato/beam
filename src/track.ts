@@ -2,11 +2,13 @@ import { Readable } from "stream";
 
 export default class Track {
     constructor(
-        public id: string, 
+        public id: string,
+        public url: string,
         public title: string, 
         public length: number, 
         public startedAt: number, 
-        public thumbnail?: string
+        public thumbnail?: string,
+        public issuer?: any
     ) {
         this.length = length / 1000
     }

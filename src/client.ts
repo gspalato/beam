@@ -25,11 +25,11 @@ export default class Client {
      * @param {String} input The YouTube URL.
      * @returns {Track}
      */
-    public async resolve(input: string): Promise<Track> {
+    public async resolve(search: string, issuer: any): Promise<Track> {
         const node = this.nodes[0];
 
         const params = new url.URLSearchParams();
-        params.append("identifier", `ytsearch:${input}`);
+        params.append("identifier", `ytsearch:${search}`);
 
         let tracks = await fetch(`http://${node.host}:${node.port}/loadtracks?${params.toString()}`, { headers: { Authorization: node.password } })
             .then(res => res.json())
@@ -42,10 +42,18 @@ export default class Client {
         if (tracks) {
             let result = tracks[0];
 
-            let track = new Track(result.track, result.info.title, result.info.length, 0);
+            let track = new Track(
+                result.track, 
+                result.info.uri, 
+                result.info.title, 
+                result.info.length, 
+                0, 
+                null, 
+                issuer
+            );
             return track;
         } else
-            throw new Error("Couldn't search.")
+            throw new Error("SEARCH_FAILED");
     }
 
 
