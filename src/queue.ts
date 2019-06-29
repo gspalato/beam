@@ -64,6 +64,7 @@ export default class Queue extends EventEmitter {
             console.log("DEBUG: ALREADY PLAYING");
             return;
         }
+        
         const next: Track = this.next();
         this.current = next;
 
@@ -71,8 +72,8 @@ export default class Queue extends EventEmitter {
             console.log("DEBUG: EMPTY QUEUE, RETURNING");
 
             this.playing = false;
-            this.client.queues.set(this.guild.id, undefined);
-            this.client.client.leave(this.guild.id);
+            this.client.queues.delete(this.guild.id);
+            this.client.lavalink.leave(this.guild.id);
 
             return;
         }
@@ -96,6 +97,8 @@ export default class Queue extends EventEmitter {
                 console.log("DEBUG: Attempting to replay");
                 this.play(channel);
             }
+
+            console.log(data.reason)
         });
 
         player.once('error', console.error)
@@ -109,7 +112,7 @@ export default class Queue extends EventEmitter {
      * @returns {void}
      */
     public skip(channel: Discord.VoiceChannel) {
-        this.player.destroy();
+        this.playing = false;
         this.play(channel);
     }
 
@@ -122,7 +125,7 @@ export default class Queue extends EventEmitter {
      */
     public stop() {
         this.player.stop();
-        this.client.queues.set(this.guild.id, undefined);
+        this.client.queues.delete(this.guild.id);
     }
 
 
