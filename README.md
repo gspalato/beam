@@ -6,7 +6,7 @@
     <img src="https://img.shields.io/badge/Language-TypeScript-blue.svg?style=for-the-badge"/>
 </p>
 <br/>
-A YTDL wrapper with queue system for discord.js. 
+A Lavalink wrapper with queue system for discord.js. 
 <br/>
 
 ## 📦 Getting Started
@@ -14,7 +14,7 @@ A YTDL wrapper with queue system for discord.js.
 
 -  [x] [npm](https://www.npmjs.com/)
 -  [x] [node.js](https://nodejs.org/)
--  [x] [ffmpeg](https://ffmpeg.org/)
+-  [x] [Lavalink](https://github.com/Frederikam/Lavalink)
 
 ### Installing
 
@@ -30,7 +30,7 @@ $ npm i --save
 
 -   [TypeScript](https://www.typescriptlang.org/)
 -   [discord.js](https://discord.js.org/)
--   [ffmpeg](https://ffmpeg.org/)
+-   [Lavalink](https://github.com/Frederikam/Lavalink)
 
 ## 📈 Versioning
 
