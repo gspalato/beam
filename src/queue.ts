@@ -69,6 +69,11 @@ export default class Queue extends EventEmitter {
 
         if (!next) {
             console.log("DEBUG: EMPTY QUEUE, RETURNING");
+
+            this.playing = false;
+            this.client.queues.set(this.guild.id, undefined);
+            this.client.client.leave(this.guild.id);
+
             return;
         }
 
@@ -90,9 +95,6 @@ export default class Queue extends EventEmitter {
             if (!["REPLACED"].includes(data.reason)) {
                 console.log("DEBUG: Attempting to replay");
                 this.play(channel);
-            } else {
-                this.playing = false;
-                this.client.client.leave(this.guild.id);
             }
         });
 
@@ -120,6 +122,7 @@ export default class Queue extends EventEmitter {
      */
     public stop() {
         this.player.stop();
+        this.client.queues.set(this.guild.id, undefined);
     }
 
 
