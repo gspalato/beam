@@ -61,7 +61,6 @@ export default class Queue extends EventEmitter {
      */
     public async play(channel: Discord.VoiceChannel): Promise<void> {
         if (this.playing) {
-            console.log("DEBUG: ALREADY PLAYING");
             return;
         }
         
@@ -69,12 +68,9 @@ export default class Queue extends EventEmitter {
         this.current = next;
 
         if (!next) {
-            console.log("DEBUG: EMPTY QUEUE, RETURNING");
-
             this.playing = false;
             this.client.queues.delete(this.guild.id);
             this.client.lavalink.leave(this.guild.id);
-
             return;
         }
 
@@ -89,16 +85,11 @@ export default class Queue extends EventEmitter {
 
         player.once("end", (data: any): void => {
             this.playing = false;
-            console.log(`DEBUG: SONG ENDED, STOPPED PLAYING. REASON: ${data.reason}`);
-            
             this.emit("songEnded", channel, this.queue[0]);
 
             if (!["REPLACED"].includes(data.reason)) {
-                console.log("DEBUG: Attempting to replay");
                 this.play(channel);
             }
-
-            console.log(data.reason)
         });
 
         player.once('error', console.error)
