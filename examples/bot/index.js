@@ -25,13 +25,13 @@ client.on("message", async (msg) => {
         }
 
         let queue = magma.getQueue(msg.guild);
-        let track = await magma.resolve(args[0], cmd.guild.member(cmd.author));
-        queue.push(track);
-        msg.channel.send(`Added **${track.title}** to the queue!`)
+        let data = await magma.resolve(args[0], cmd.guild.member(cmd.author));
+        queue.push(data.tracks[0]);
+        msg.channel.send(`Added **${data.tracks[0].title}** to the queue!`)
 
         if (!queue.playing) {
             queue.play(msg.member.voiceChannel);
-            msg.channel.send(`Now playing **${track.title}**`)
+            msg.channel.send(`Now playing **${data.tracks.title}**`)
         }
     } else if (cmd === "skip") {
         let queue = magma.getQueue(msg.guild)
