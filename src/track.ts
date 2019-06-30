@@ -4,9 +4,9 @@ export default class Track {
     constructor(
         public id: string,
         public url: string,
-        public title: string, 
-        public length: number, 
-        public startedAt: number, 
+        public title: string,
+        public length: number,
+        public startedAt: number,
         public thumbnail?: string,
         public issuer?: any
     ) {

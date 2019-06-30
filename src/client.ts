@@ -12,7 +12,7 @@ export default class Client {
     public queues: Map<string, Queue> = new Map();
 
     constructor(
-        public client: Discord.Client, 
+        public client: Discord.Client,
         public nodes: { host: string, port: number, password: string }[],
         public shards: number
     ) {}

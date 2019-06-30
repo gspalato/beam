@@ -28,10 +28,10 @@ export default class Queue extends EventEmitter {
         if (this.player)
             return this.player;
 
-        let player = this.client.lavalink.join({ 
-            guild: channel.guild.id, 
-            channel: channel.id, 
-            host: this.client.nodes[0].host 
+        let player = this.client.lavalink.join({
+            guild: channel.guild.id,
+            channel: channel.id,
+            host: this.client.nodes[0].host
         });
         this.player = player;
 
@@ -108,10 +108,10 @@ export default class Queue extends EventEmitter {
     }
 
 
-    /** 
+    /**
      * Stops the player.
      *     Queue.stop();
-     * 
+     *
      * @returns {void}
      */
     public stop() {
