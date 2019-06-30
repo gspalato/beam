@@ -77,7 +77,7 @@ export default class Queue extends EventEmitter {
 
         player.play(next.id)
 
-        player.once("end", (data: any): void => {
+        player.on("end", (data: any): void => {
             this.emit("songEnded", channel, this.queue[0]);
 
             console.log(data);
