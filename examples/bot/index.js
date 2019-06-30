@@ -1,8 +1,8 @@
 const Discord = require("discord.js");
-const Magma = require("@ohinoki/magma");
+const Beam = require("@ohinoki/beam");
 
 const client = new Discord.Client();
-const magma = new Magma.Client(client, [ { host: "localhost", port: 2333, password: "youshallnotpass" } ], 1);
+const beam = new Beam.Client(client, [ { host: "localhost", port: 2333, password: "youshallnotpass" } ], 1);
 
 const prefix = "!";
 
@@ -24,15 +24,15 @@ client.on("message", async (msg) => {
             return;
         }
       
-        let data = await magma.resolve(args[0], cmd.guild.member(cmd.author));
+        let data = await beam.resolve(args[0], cmd.guild.member(cmd.author));
         queue.push(data.tracks[0]);
         msg.channel.send(`Added **${data.tracks[0].title}** to the queue!`)
 
         if (!queue.playing) {
             queue.play(msg.member.voiceChannel);
             msg.channel.send(`Now playing **${data.tracks.title}**`)
-=======
-        let track = await magma.resolve(args[0], cmd.guild.member(cmd.author));
+
+        let track = await beam.resolve(args[0], cmd.guild.member(cmd.author));
         queue.push(track);
         msg.channel.send(`Added **${track.title}** to the queue!`);
 
@@ -41,7 +41,7 @@ client.on("message", async (msg) => {
             msg.channel.send(`Now playing **${track.title}**`);
         }
     } else if (cmd === "skip") {
-        let queue = magma.getQueue(msg.guild);
+        let queue = beam.getQueue(msg.guild);
         queue.skip();
     }
 });
