@@ -40,7 +40,9 @@ export default class Client {
             });
 
         if (tracks) {
-            let result = tracks[0];
+            let result;
+
+            result = tracks.find((t) => t.info.uri === search) || tracks[0];
 
             let track = new Track(
                 result.track, 

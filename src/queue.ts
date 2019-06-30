@@ -115,7 +115,7 @@ export default class Queue extends EventEmitter {
      * @returns {void}
      */
     public stop() {
-        this.player.stop();
+        this.player.destroy();
         this.client.queues.delete(this.guild.id);
     }
 
