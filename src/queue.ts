@@ -87,7 +87,7 @@ export default class Queue extends EventEmitter {
             }
         });
 
-        player.once('error', console.error)
+        player.on('error', console.error)
     }
 
 
