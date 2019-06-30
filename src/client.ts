@@ -29,8 +29,8 @@ export default class Client {
         const node = this.nodes[0];
 
         let param;
-        const rlink = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|playlist\?list=|\&v=)(&list=)?([^#\&\?]*).*/;
-        if (rlink.test(search))
+        let lr = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|playlist\?list=|\&v=)(&list=)?([^#\&\?]*).*/;
+        if (lr.test(search))
             param = search;
         else
             param = `ytsearch:${search}`;
@@ -42,20 +42,11 @@ export default class Client {
             .then(res => res.json())
             .catch(err => {
                 console.error(err);
-                return null;
             });
 
         if (data && data.tracks) {
             let result = data.tracks.map(
-                (t) => new Track(
-                    t.track,
-                    t.info.uri,
-                    t.info.title,
-                    t.info.length,
-                    0,
-                    null,
-                    issuer
-                )
+                (t) => new Track(t.track, t.info.uri, t.info.title, t.info.length, 0, null, issuer)
             )
             
             return {
