@@ -4,9 +4,9 @@ export default class Track {
     constructor(
         public id: string,
         public url: string,
-        public title: string, 
-        public length: number, 
-        public startedAt: number, 
+        public title: string,
+        public length: number,
+        public startedAt: number,
         public thumbnail?: string,
         public issuer?: any
     ) {
@@ -16,7 +16,7 @@ export default class Track {
 
     /**
      * Sets the timestamp of when the track started playing
-     * 
+     *
      * @returns {void}
      */
     public setStart(): void {
@@ -26,7 +26,7 @@ export default class Track {
 
     /**
      * Returns the current position of the song in seconds.
-     * 
+     *
      * @returns {number} The position of the song in seconds.
      */
     public position(): number {

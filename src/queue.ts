@@ -20,7 +20,7 @@ export default class Queue extends EventEmitter {
     /**
      * Joins a voice channel.
      *     Queue.join(msg.member.voiceChannel);
-     * 
+     *
      * @param {Discord.VoiceChannel} channel The voice channel.
      * @returns {Promise<Discord.VoiceConnection>}
      */
@@ -28,10 +28,10 @@ export default class Queue extends EventEmitter {
         if (this.player)
             return this.player;
 
-        let player = this.client.lavalink.join({ 
-            guild: channel.guild.id, 
-            channel: channel.id, 
-            host: this.client.nodes[0].host 
+        let player = this.client.lavalink.join({
+            guild: channel.guild.id,
+            channel: channel.id,
+            host: this.client.nodes[0].host
         });
         this.player = player;
 
@@ -42,7 +42,7 @@ export default class Queue extends EventEmitter {
     /**
      * Push a new track to the queue.
      *     Queue.push(Client.resolve("https://www.youtube.com/watch?v=dQw4w9WgXcQ"));
-     * 
+     *
      * @param {Track} track
      * @returns {void}
      */
@@ -54,10 +54,10 @@ export default class Queue extends EventEmitter {
     /**
      * Plays music on the designated music channel.
      *     Queue.play(msg.member.voiceChannel);
-     * 
+     *
      * @param {Discord.VoiceChannel} channel The voice channel.
      * @return {Promise<void>}
-     * 
+     *
      */
     public async play(channel: Discord.VoiceChannel): Promise<void> {
         const next: Track = this.next();
@@ -94,7 +94,7 @@ export default class Queue extends EventEmitter {
     /**
      * Skips to the next song.
      *     Queue.skip();
-     * 
+     *
      * @returns {void}
      */
     public skip(channel: Discord.VoiceChannel) {
@@ -103,10 +103,10 @@ export default class Queue extends EventEmitter {
     }
 
 
-    /** 
+    /**
      * Stops the player.
      *     Queue.stop();
-     * 
+     *
      * @returns {void}
      */
     public stop() {
@@ -118,7 +118,7 @@ export default class Queue extends EventEmitter {
     /**
      * Shifts and returns the next song in the queue
      *     Queue.next();
-     * 
+     *
      * @returns {Track | null}
      */
     private next(): Track {

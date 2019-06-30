@@ -16,15 +16,14 @@ client.on("message", async (msg) => {
     }
 
     let args = msg.content.substring(prefix.length).split(" ");
-    let cmd = args.shift()
+    let cmd = args.shift();
 
     if (cmd === "play") {
         if (!msg.member.voiceChannel) {
             msg.reply("Join a voice channel first.");
             return;
         }
-
-        let queue = magma.getQueue(msg.guild);
+      
         let data = await magma.resolve(args[0], cmd.guild.member(cmd.author));
         queue.push(data.tracks[0]);
         msg.channel.send(`Added **${data.tracks[0].title}** to the queue!`)
@@ -32,10 +31,18 @@ client.on("message", async (msg) => {
         if (!queue.playing) {
             queue.play(msg.member.voiceChannel);
             msg.channel.send(`Now playing **${data.tracks.title}**`)
+=======
+        let track = await magma.resolve(args[0], cmd.guild.member(cmd.author));
+        queue.push(track);
+        msg.channel.send(`Added **${track.title}** to the queue!`);
+
+        if (!queue.playing) {
+            queue.play(msg.member.voiceChannel);
+            msg.channel.send(`Now playing **${track.title}**`);
         }
     } else if (cmd === "skip") {
-        let queue = magma.getQueue(msg.guild)
-        queue.skip()
+        let queue = magma.getQueue(msg.guild);
+        queue.skip();
     }
 });
 

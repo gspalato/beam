@@ -78,9 +78,9 @@ export default class Client {
     /**
      * Returns the queue for the given guild. If it doesn't exist, one is created and returned.
      *     Client.getQueue(msg.guild);
-     * 
+     *
      * @param {Discord.Guild} guild
-     * @returns {Queue} 
+     * @returns {Queue}
      */
     public getQueue(guild: Discord.Guild): Queue {
         if (this.queues.has(guild.id)) {
