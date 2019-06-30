@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 const Magma = require("@ohinoki/magma");
 
 const client = new Discord.Client();
-const magma = new Magma.Client(client, "YouTube API Token");
+const magma = new Magma.Client(client, [ { host: "localhost", port: 2333, password: "youshallnotpass" } ], 1);
 
 const prefix = "!";
 
@@ -25,7 +25,7 @@ client.on("message", async (msg) => {
         }
 
         let queue = magma.getQueue(msg.guild);
-        let track = await magma.resolve(args[0]);
+        let track = await magma.resolve(args[0], cmd.guild.member(cmd.author));
         queue.push(track);
         msg.channel.send(`Added **${track.title}** to the queue!`);
 

@@ -1,19 +1,18 @@
+import * as Lavalink from "discord.js-lavalink";
 import * as Discord from "discord.js";
-import ytdl from "ytdl-core";
-import YouTube = require("simple-youtube-api");
 import { EventEmitter } from "events";
 
 import Track from "./track";
+import { Client } from ".";
 
 export default class Queue extends EventEmitter {
-    public dispatcher: Discord.StreamDispatcher;
-    public connection: Discord.VoiceConnection;
+    public player: Lavalink.Player;
     public current: Track;
     public playing: boolean = false;
     public volume: number = .5;
     public queue: Track[] = [];
 
-    constructor(public guild: Discord.Guild) {
+    constructor(public client, public guild: Discord.Guild) {
         super()
     }
 
@@ -25,13 +24,18 @@ export default class Queue extends EventEmitter {
      * @param {Discord.VoiceChannel} channel The voice channel.
      * @returns {Promise<Discord.VoiceConnection>}
      */
-    public async join(channel: Discord.VoiceChannel): Promise<Discord.VoiceConnection> {
-        if (channel && channel.connection) {
-            return channel.connection;
-        }
+    public async join(channel: Discord.VoiceChannel): Promise<Lavalink.Player> {
+        if (this.player)
+            return this.player;
 
-        this.connection = await channel.join();
-        return this.connection;
+        let player = this.client.lavalink.join({
+            guild: channel.guild.id,
+            channel: channel.id,
+            host: this.client.nodes[0].host
+        });
+        this.player = player;
+
+        return player;
     }
 
 
@@ -57,47 +61,38 @@ export default class Queue extends EventEmitter {
      */
     public async play(channel: Discord.VoiceChannel): Promise<void> {
         if (this.playing) {
-            console.log("DEBUG: ALREADY PLAYING");
             return;
         }
+        
         const next: Track = this.next();
         this.current = next;
 
         if (!next) {
-            console.log("DEBUG: EMPTY QUEUE, RETURNING");
+            this.playing = false;
+            this.client.queues.delete(this.guild.id);
+            this.client.lavalink.leave(this.guild.id);
             return;
         }
 
-        const connection: Discord.VoiceConnection = await this.join(channel);
-        const dispatcher: Discord.StreamDispatcher = connection.playStream(next.stream());
+        const player: Lavalink.Player = await this.join(channel);
 
-        this.dispatcher = dispatcher;
-        this.connection = connection;
+        this.emit("songStarted", channel, this.current);
 
         this.current.setStart();
         this.playing = true;
 
-        dispatcher.setVolumeLogarithmic(.5);
+        player.play(next.id)
 
-        dispatcher.on('end', (reason: string): void => {
+        player.once("end", (data: any): void => {
             this.playing = false;
-            console.log(`DEBUG: SONG ENDED, STOPPED PLAYING. REASON: ${reason}`);
-            
             this.emit("songEnded", channel, this.queue[0]);
 
-            if (["Stream is not generating quickly enough.", ":skip:"].includes(reason)) {
-                console.log("DEBUG: Attempting to replay");
+            if (!["REPLACED"].includes(data.reason)) {
                 this.play(channel);
-            } else {
-                if (this.dispatcher.stream)
-                    this.dispatcher.stream.destroy()
-
-                this.playing = false;
-                this.dispatcher = null;
             }
         });
 
-        dispatcher.on('error', console.error)
+        player.once('error', console.error)
     }
 
 
@@ -107,8 +102,21 @@ export default class Queue extends EventEmitter {
      *
      * @returns {void}
      */
-    public skip() {
-        this.dispatcher.end(":skip:");
+    public skip(channel: Discord.VoiceChannel) {
+        this.playing = false;
+        this.play(channel);
+    }
+
+
+    /**
+     * Stops the player.
+     *     Queue.stop();
+     *
+     * @returns {void}
+     */
+    public stop() {
+        this.player.destroy();
+        this.client.queues.delete(this.guild.id);
     }
 
 

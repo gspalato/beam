@@ -1,17 +1,16 @@
-import ytdl from "ytdl-core";
-import * as YouTube from "simple-youtube-api";
+import { Readable } from "stream";
 
 export default class Track {
-    public url: string;
-    public title: string;
-    public startedAt: number;
-    public thumbnail: string;
-
-    constructor(video: YouTube.video) {
-        this.url = video.url;
-        this.title = video.title;
-        this.startedAt = 0;
-        this.thumbnail = video.thumbnails.default;
+    constructor(
+        public id: string,
+        public url: string,
+        public title: string,
+        public length: number,
+        public startedAt: number,
+        public thumbnail?: string,
+        public issuer?: any
+    ) {
+        this.length = length / 1000
     }
 
 
@@ -22,16 +21,6 @@ export default class Track {
      */
     public setStart(): void {
         this.startedAt = Date.now();
-    }
-
-
-    /**
-     * Returns a stream of the music.
-     *
-     * @returns {ReadableStream<any>} The stream used to play the music.
-     */
-    public stream() {
-        return ytdl(this.url);
     }
 
 
