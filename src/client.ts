@@ -3,9 +3,24 @@ import * as Discord from "discord.js";
 import fetch from "node-fetch";
 import * as url from "url";
 
-
 import Queue from "./queue";
 import Track from "./track";
+
+
+interface INode { 
+    host: string;
+    port: number; 
+    password: string; 
+}
+
+interface IData {
+    info?: {
+        selectedTrack: number;
+        name: string;
+    };
+    type: string;
+    tracks: Track[];
+}
 
 export default class Client {
     public lavalink = new Lavalink.PlayerManager(this.client, this.nodes, { user: this.client.user.id, shards: this.shards });
@@ -13,7 +28,7 @@ export default class Client {
 
     constructor(
         public client: Discord.Client, 
-        public nodes: { host: string, port: number, password: string }[],
+        public nodes: INode[],
         public shards: number
     ) {}
 
@@ -22,10 +37,11 @@ export default class Client {
      * Returns the track fetched from the YouTube link.
      *     Client.resolve("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
      * 
-     * @param {String} input The YouTube URL.
-     * @returns {Track}
+     * @param {String} search The YouTube URL.
+     * @param {any} issuer Any kind of value that represents who requested the video.
+     * @returns {IData} 
      */
-    public async resolve(search: string, issuer: any): Promise<{  }> {
+    public async resolve(search: string, issuer: any): Promise<IData> {
         const node = this.nodes[0];
 
         let param;
@@ -47,7 +63,7 @@ export default class Client {
         if (data && data.tracks) {
             let result = data.tracks.map(
                 (t) => new Track(t.track, t.info.uri, t.info.title, t.info.length, 0, null, issuer)
-            )
+            );
             
             return {
                 info: data.playlistInfo,
