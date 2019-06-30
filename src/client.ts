@@ -21,7 +21,7 @@ export default class Client {
     /**
      * Returns the track fetched from the YouTube link.
      *     Client.resolve("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
-     * 
+     *
      * @param {String} input The YouTube URL.
      * @returns {Track}
      */
@@ -71,9 +71,9 @@ export default class Client {
     /**
      * Returns the queue for the given guild. If it doesn't exist, one is created and returned.
      *     Client.getQueue(msg.guild);
-     * 
+     *
      * @param {Discord.Guild} guild
-     * @returns {Queue} 
+     * @returns {Queue}
      */
     public getQueue(guild: Discord.Guild): Queue {
         if (this.queues.has(guild.id)) {
