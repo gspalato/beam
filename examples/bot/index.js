@@ -31,18 +31,11 @@ client.on("message", async (msg) => {
         if (!queue.playing) {
             queue.play(msg.member.voiceChannel);
             msg.channel.send(`Now playing **${data.tracks.title}**`)
-
-        let track = await beam.resolve(args[0], cmd.guild.member(cmd.author));
-        queue.push(track);
-        msg.channel.send(`Added **${track.title}** to the queue!`);
-
-        if (!queue.playing) {
-            queue.play(msg.member.voiceChannel);
-            msg.channel.send(`Now playing **${track.title}**`);
         }
     } else if (cmd === "skip") {
         let queue = beam.getQueue(msg.guild);
         queue.skip();
+
     }
 });
 
