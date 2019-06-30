@@ -60,15 +60,10 @@ export default class Queue extends EventEmitter {
      * 
      */
     public async play(channel: Discord.VoiceChannel): Promise<void> {
-        if (this.playing) {
-            return;
-        }
-        
         const next: Track = this.next();
         this.current = next;
 
         if (!next) {
-            this.playing = false;
             this.client.queues.delete(this.guild.id);
             this.client.lavalink.leave(this.guild.id);
             return;
@@ -79,13 +74,13 @@ export default class Queue extends EventEmitter {
         this.emit("songStarted", channel, this.current);
 
         this.current.setStart();
-        this.playing = true;
 
         player.play(next.id)
 
         player.once("end", (data: any): void => {
-            this.playing = false;
             this.emit("songEnded", channel, this.queue[0]);
+
+            console.log(data);
 
             if (!["REPLACED"].includes(data.reason)) {
                 this.play(channel);
