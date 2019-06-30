@@ -29,7 +29,7 @@ export default class Client {
         const node = this.nodes[0];
 
         let param;
-        const rlink = /http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?/;
+        const rlink = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
         if (rlink.test(search))
             param = search;
         else
