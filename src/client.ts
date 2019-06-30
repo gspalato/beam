@@ -25,35 +25,44 @@ export default class Client {
      * @param {String} input The YouTube URL.
      * @returns {Track}
      */
-    public async resolve(search: string, issuer: any): Promise<Track> {
+    public async resolve(search: string, issuer: any): Promise<{  }> {
         const node = this.nodes[0];
 
-        const params = new url.URLSearchParams();
-        params.append("identifier", `ytsearch:${search}`);
+        let param;
+        const rlink = /http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?/;
+        if (rlink.test(search))
+            param = search;
+        else
+            param = `ytsearch:${search}`;
 
-        let tracks = await fetch(`http://${node.host}:${node.port}/loadtracks?${params.toString()}`, { headers: { Authorization: node.password } })
+        const params = new url.URLSearchParams();
+        params.append("identifier", param);
+
+        let data = await fetch(`http://${node.host}:${node.port}/loadtracks?${params.toString()}`, { headers: { Authorization: node.password } })
             .then(res => res.json())
-            .then(data => data.tracks)
             .catch(err => {
                 console.error(err);
                 return null;
             });
 
-        if (tracks) {
-            let result;
-
-            result = tracks.find((t) => t.info.uri === search) || tracks[0];
-
-            let track = new Track(
-                result.track, 
-                result.info.uri, 
-                result.info.title, 
-                result.info.length, 
-                0, 
-                null, 
-                issuer
-            );
-            return track;
+        if (data && data.tracks) {
+            let result = data.tracks.map(
+                (t) => new Track(
+                    t.track,
+                    t.info.uri,
+                    t.info.title,
+                    t.info.length,
+                    0,
+                    null,
+                    issuer
+                )
+            )
+            
+            return {
+                info: data.playlistInfo,
+                type: (data.loadType === "PLAYLIST_LOADED") ? "PLAYLIST" : "VIDEO",
+                tracks: result,
+            };
         } else
             throw new Error("SEARCH_FAILED");
     }
