@@ -8,8 +8,6 @@ import { Client } from ".";
 export default class Queue extends EventEmitter {
     public player: Lavalink.Player;
     public current: Track;
-    public playing: boolean = false;
-    public volume: number = .5;
     public queue: Track[] = [];
 
     constructor(public client, public guild: Discord.Guild) {
@@ -77,15 +75,17 @@ export default class Queue extends EventEmitter {
 
         player.play(next.id)
 
-        player.on("end", (data: any): void => {
-            this.emit("songEnded", channel, this.queue[0]);
+        if (!player.listeners("end")[0]) {
+            player.on("end", (data: any): void => {
+                this.emit("songEnded", channel, this.queue[0]);
 
-            console.log(data);
+                console.log(data);
 
-            if (!["REPLACED"].includes(data.reason)) {
-                this.play(channel);
-            }
-        });
+                if (!["REPLACED"].includes(data.reason)) {
+                    this.play(channel);
+                }
+            });
+        }
 
         player.on('error', console.error)
     }
@@ -98,7 +98,6 @@ export default class Queue extends EventEmitter {
      * @returns {void}
      */
     public skip(channel: Discord.VoiceChannel) {
-        this.playing = false;
         this.play(channel);
     }
 
