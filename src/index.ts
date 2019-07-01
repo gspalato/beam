@@ -3,7 +3,7 @@ import BeamQueue from "./queue";
 import BeamTrack from "./track";
 
 export {
-    BeamClient,
-    BeamQueue,
-    BeamTrack
+    BeamClient as Client,
+    BeamQueue as Queue,
+    BeamTrack as Track
 };
