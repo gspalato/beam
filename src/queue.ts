@@ -78,8 +78,6 @@ export default class BeamQueue extends EventEmitter {
             player.on("end", (data: any): void => {
                 this.emit("songEnded", channel, this.queue[0]);
 
-                console.log(data);
-
                 if (!["REPLACED"].includes(data.reason)) {
                     this.play(channel);
                 }
