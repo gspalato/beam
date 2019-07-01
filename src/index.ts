@@ -1,9 +1,9 @@
-import Client from "./client";
-import Queue from "./queue";
-import Track from "./track";
+import BeamClient from "./client";
+import BeamQueue from "./queue";
+import BeamTrack from "./track";
 
 export {
-    Client,
-    Queue,
-    Track
+    BeamClient,
+    BeamQueue,
+    BeamTrack
 };

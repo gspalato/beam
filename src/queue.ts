@@ -3,9 +3,9 @@ import * as Discord from "discord.js";
 import { EventEmitter } from "events";
 
 import Track from "./track";
-import { Client } from ".";
 
-export default class Queue extends EventEmitter {
+
+export default class BeamQueue extends EventEmitter {
     public player: Lavalink.Player;
     public current: Track;
     public queue: Track[] = [];

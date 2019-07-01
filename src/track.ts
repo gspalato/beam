@@ -1,6 +1,6 @@
 import { Readable } from "stream";
 
-export default class Track {
+export default class BeamTrack {
     constructor(
         public id: string,
         public url: string,

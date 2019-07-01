@@ -22,7 +22,7 @@ interface IData {
     tracks: Track[];
 }
 
-export default class Client {
+export default class BeamClient {
     public lavalink = new Lavalink.PlayerManager(this.client, this.nodes, { user: this.client.user.id, shards: this.shards });
     public queues: Map<string, Queue> = new Map();
 
