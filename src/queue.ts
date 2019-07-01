@@ -58,14 +58,13 @@ export default class Queue extends EventEmitter {
      *
      */
     public async play(channel: Discord.VoiceChannel): Promise<void> {
-        const next: Track = this.next();
-        this.current = next;
-
-        if (!next) {
+        if (!this.queue[0]) {
             this.client.queues.delete(this.guild.id);
             this.client.lavalink.leave(this.guild.id);
             return;
         }
+        const next: Track = this.next();
+        this.current = next;
 
         const player: Lavalink.Player = await this.join(channel);
 
