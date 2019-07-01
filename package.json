@@ -1,6 +1,6 @@
 {
   "name": "@ohinoki/beam",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A Lavalink wrapper with queue system for discord.js.",
   "main": "dist/index.js",
   "scripts": {
@@ -20,7 +20,6 @@
     "discord.js-lavalink": "^2.2.2",
     "lavalink": "^2.6.1",
     "npm": "^6.9.2",
-    "opusscript": "0.0.6",
     "node-fetch": "^2.3.0"
   },
   "keywords": [
