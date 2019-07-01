@@ -3,8 +3,8 @@ import * as Discord from "discord.js";
 import fetch from "node-fetch";
 import * as url from "url";
 
-import Queue from "./queue";
-import Track from "./track";
+import BeamQueue from "./queue";
+import BeamTrack from "./track";
 
 
 interface INode { 
@@ -19,12 +19,12 @@ interface IData {
         name: string;
     };
     type: string;
-    tracks: Track[];
+    tracks: BeamTrack[];
 }
 
 export default class BeamClient {
     public lavalink = new Lavalink.PlayerManager(this.client, this.nodes, { user: this.client.user.id, shards: this.shards });
-    public queues: Map<string, Queue> = new Map();
+    public queues: Map<string, BeamQueue> = new Map();
 
     constructor(
         public client: Discord.Client, 
@@ -62,7 +62,7 @@ export default class BeamClient {
 
         if (data && data.tracks) {
             let result = data.tracks.map(
-                (t) => new Track(t.track, t.info.uri, t.info.title, t.info.length, 0, null, issuer)
+                (t) => new BeamTrack(t.track, t.info.uri, t.info.title, t.info.length, 0, null, issuer)
             );
             
             return {
@@ -82,12 +82,12 @@ export default class BeamClient {
      * @param {Discord.Guild} guild
      * @returns {Queue}
      */
-    public getQueue(guild: Discord.Guild): Queue {
+    public getQueue(guild: Discord.Guild): BeamQueue {
         if (this.queues.has(guild.id)) {
             return this.queues.get(guild.id);
         }
 
-        const queue: Queue = new Queue(this, guild);
+        const queue: BeamQueue = new BeamQueue(this, guild);
         this.queues.set(guild.id, queue);
 
         return queue;
