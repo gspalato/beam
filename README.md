@@ -22,6 +22,8 @@ Clone the repository to a folder and install dependencies.
 ```bash
 $ npm i --save
 ```
+Go to [Lavalink](https://github.com/Frederikam/Lavalink) and download it, following the instructions on how to setup and run.
+Then, you can already start using Beam! Just make sure to use the example bot as a guide on how to setup.
 
 ## 📖 Examples
 - [Example Bot](https://github.com/gspalato/beam/blob/master/examples/bot/index.js)
