@@ -106,7 +106,8 @@ export default class BeamQueue extends EventEmitter {
      * @returns {void}
      */
     public stop() {
-        this.player.destroy();
+        if (this.player)
+            this.player.destroy();
         this.client.queues.delete(this.guild.id);
     }
 
