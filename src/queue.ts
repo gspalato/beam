@@ -119,15 +119,17 @@ export default class BeamQueue extends EventEmitter {
      * @returns {void}
      */
     public shuffle(): void {
+        let copy: Track[] = Array.from(this.queue)
         let shuffled: Track[] = [];
-        let n: number = this.queue.length;
+        let n: number = copy.length;
         let i;
 
         while (n) {
-            i = Math.floor(Math.random() * this.queue.length);
+            i = Math.floor(Math.random() * copy.length);
 
-            if (i in this.queue) {
-                shuffled.push(this.queue[i]);
+            if (i in copy) {
+                shuffled.push(copy[i]);
+                delete copy[i];
                 n--;
             }   
         }
