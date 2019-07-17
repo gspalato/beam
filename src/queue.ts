@@ -3,14 +3,16 @@ import * as Discord from "discord.js";
 import { EventEmitter } from "events";
 
 import Track from "./track";
+import BeamClient from "./client";
 
 
 export default class BeamQueue extends EventEmitter {
     public player: Lavalink.Player;
     public current: Track;
     public queue: Track[] = [];
+    public loop: boolean = false;
 
-    constructor(public client, public guild: Discord.Guild) {
+    constructor(public client: BeamClient, public guild: Discord.Guild) {
         super()
     }
 
@@ -31,7 +33,8 @@ export default class BeamQueue extends EventEmitter {
             channel: channel.id,
             host: this.client.nodes[0].host
         });
-        this.player = player;
+
+        this.player = await player;
 
         return player;
     }
@@ -63,7 +66,7 @@ export default class BeamQueue extends EventEmitter {
             this.client.lavalink.leave(this.guild.id);
             return;
         }
-        const next: Track = this.next();
+        const next: Track = this.loop ? this.current : this.next();
         this.current = next;
 
         const player: Lavalink.Player = await this.join(channel);
@@ -109,6 +112,28 @@ export default class BeamQueue extends EventEmitter {
         if (this.player)
             this.player.destroy();
         this.client.queues.delete(this.guild.id);
+    }
+
+
+    /**
+     * Loop the current song.
+     *     Queue.unrepeat();
+     * 
+     * @returns {void}
+     */
+    public repeat(): void {
+        this.loop = true;
+    }
+
+
+    /**
+     * Stop looping the current song.
+     *     Queue.unrepeat();
+     * 
+     * @returns {void}
+     */
+    public unrepeat(): void {
+        this.loop = false;
     }
 
 
