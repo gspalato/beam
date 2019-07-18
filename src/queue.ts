@@ -97,7 +97,7 @@ export default class BeamQueue extends EventEmitter {
      *
      * @returns {void}
      */
-    public skip(channel: Discord.VoiceChannel) {
+    public skip(channel: Discord.VoiceChannel): void {
         this.play(channel);
     }
 
@@ -108,32 +108,11 @@ export default class BeamQueue extends EventEmitter {
      *
      * @returns {void}
      */
-    public stop() {
+    public stop(): void {
         if (this.player)
             this.player.destroy();
+
         this.client.queues.delete(this.guild.id);
-    }
-
-
-    /**
-     * Loop the current song.
-     *     Queue.unrepeat();
-     * 
-     * @returns {void}
-     */
-    public repeat(): void {
-        this.loop = true;
-    }
-
-
-    /**
-     * Stop looping the current song.
-     *     Queue.unrepeat();
-     * 
-     * @returns {void}
-     */
-    public unrepeat(): void {
-        this.loop = false;
     }
 
 
