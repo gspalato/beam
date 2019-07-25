@@ -44,9 +44,15 @@ export default class BeamClient {
     public async resolve(search: string, issuer: any): Promise<IData> {
         const node = this.nodes[0];
 
+        const regex = [
+            /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|playlist\?list=|\&v=)(&list=)?([^#\&\?]*).*/,
+            /^(https?:\/\/)?(www.)?(m\.)?soundcloud\.com\/[\w\-\.]+(\/)+[\w\-\.]+/,
+            /^(?:https:\/\/)?clips\.twitch\.tv\/(\S+)/
+        ];
+
         let param;
-        let lr = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|playlist\?list=|\&v=)(&list=)?([^#\&\?]*).*/;
-        if (lr.test(search))
+        let r = new RegExp(regex.map(r => r.source).join("|"));
+        if (r.test(search))
             param = search;
         else
             param = `ytsearch:${search}`;
