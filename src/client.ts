@@ -47,7 +47,7 @@ export default class BeamClient {
         const regex = [
             /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|playlist\?list=|\&v=)(&list=)?([^#\&\?]*).*/,
             /^(https?:\/\/)?(www.)?(m\.)?soundcloud\.com\/[\w\-\.]+(\/)+[\w\-\.]+/,
-            /^(?:https:\/\/)?clips\.twitch\.tv\/(\S+)/
+            /^(?:https:\/\/)?(clips\.)?twitch\.tv\/(\S+)/
         ];
 
         let param;
