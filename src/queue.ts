@@ -87,7 +87,7 @@ export default class BeamQueue extends EventEmitter {
             });
         }
 
-        player.on('error', console.error)
+        player.on('error', (e) => this.emit("error", e, this.current))
     }
 
 
