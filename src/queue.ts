@@ -142,6 +142,19 @@ export default class BeamQueue extends EventEmitter {
     }
 
 
+    /** 
+     * Unqueue (remove) track.
+     *     Queue.unqueue();
+     * 
+     * @returns {Track[]} removed
+     */
+    public unqueue(position: number): Track[] {
+        let removed = this.queue.splice(position, 1);
+
+        return removed;
+    }
+
+
     /**
      * Shifts and returns the next song in the queue
      *     Queue.next();
