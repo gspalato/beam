@@ -34,10 +34,10 @@ export default class BeamClient {
 
 
     /**
-     * Returns the track fetched from the YouTube link.
+     * Returns the track fetched from link.
      *     Client.resolve("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
      * 
-     * @param {String} search The YouTube URL.
+     * @param {String} search URL or query
      * @param {any} issuer Any kind of value that represents who requested the video.
      * @returns {IData} 
      */
@@ -45,6 +45,7 @@ export default class BeamClient {
         const node = this.nodes[0];
 
         const regex = [
+            /^(http|https)?:\/\/(www\.|player\.)?vimeo\.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|video\/|)(\d+)(?:|\/\?)$/,
             /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|playlist\?list=|\&v=)(&list=)?([^#\&\?]*).*/,
             /^(https?:\/\/)?(www.)?(m\.)?soundcloud\.com\/[\w\-\.]+(\/)+[\w\-\.]+/,
             /^(?:https:\/\/)?(clips\.)?twitch\.tv\/(\S+)/
