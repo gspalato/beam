@@ -44,11 +44,11 @@ export default class BeamClient {
     public async resolve(search: string, issuer: any): Promise<IData> {
         const node = this.nodes[0];
 
-        const regex: RegExp[] = [
-            /^(https?:\/\/)?(www\.|player\.)?vimeo\.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|video\/|)(\d+)(?:|\/\?)$/,
-            /^(https?:\/\/)?(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|playlist\?list=|\&v=)(&list=)?([^#\&\?]*).*$/,
+        const regex = [
+            /^(http|https)?:\/\/(www\.|player\.)?vimeo\.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|video\/|)(\d+)(?:|\/\?)$/,
+            /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|playlist\?list=|\&v=)(&list=)?([^#\&\?]*).*$/,
             /^(https?:\/\/)?(www.)?(m\.)?soundcloud\.com\/[\w\-\.]+(\/)+[\w\-\.]+$/,
-            /^(https?:\/\/)?(clips\.)?twitch\.tv\/(\S+)$/
+            /^(?:https:\/\/)?(clips\.)?twitch\.tv\/(\S+)$/
         ];
 
         let param;
